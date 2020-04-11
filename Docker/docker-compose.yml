@@ -1,0 +1,16 @@
+---
+version: '3'
+services:
+  proxy:
+    build: .
+    image: uritau/proxy:latest
+    environment:
+      - REDIRECT_TO=http://myunsecureserver.mydomain.com
+      - LDAP_SERVER=ldap://INSECURELDAPSERVER:389/OU=USERS,DC=contoso,DC=local
+        #ALERT! The backslash between domain name and username should be escaped, duplicating the backslash
+      - LDAP_USER=contoso\\username
+      - LDAP_PASSWORD=USERPASSWORD
+      - LDAP_GROUP=CN=EXAMPLE-proxy-users,OU=Groups,DC=contoso,DC=local
+      - AUTH_MESSAGE="LDAP user and password"
+    ports:
+      - 80:80
